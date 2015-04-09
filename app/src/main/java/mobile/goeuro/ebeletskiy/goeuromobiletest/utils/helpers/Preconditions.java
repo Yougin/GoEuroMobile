@@ -1,4 +1,4 @@
-package mobile.goeuro.ebeletskiy.goeuromobiletest.utils;
+package mobile.goeuro.ebeletskiy.goeuromobiletest.utils.helpers;
 
 /*
  * Copyright (C) 2007 The Guava Authors

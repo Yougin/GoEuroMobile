@@ -8,7 +8,7 @@ import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.WebService;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.error.NetworkConnectionException;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.model.DestinationPoint;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.events.DestinationPointsEvents;
-import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.Preconditions;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.helpers.Preconditions;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.language.LanguageProvider;
 import org.jetbrains.annotations.NotNull;
 import timber.log.Timber;

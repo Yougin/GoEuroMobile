@@ -7,7 +7,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import de.greenrobot.event.EventBus;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.events.LocationProviderEvents;
-import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.Preconditions;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.helpers.Preconditions;
 import org.jetbrains.annotations.NotNull;
 import timber.log.Timber;
 
