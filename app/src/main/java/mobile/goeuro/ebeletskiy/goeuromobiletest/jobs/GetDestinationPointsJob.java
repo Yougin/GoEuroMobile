@@ -1,6 +1,5 @@
 package mobile.goeuro.ebeletskiy.goeuromobiletest.jobs;
 
-import com.google.common.base.Preconditions;
 import com.path.android.jobqueue.Params;
 import de.greenrobot.event.EventBus;
 import java.util.List;
@@ -9,6 +8,7 @@ import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.WebService;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.error.NetworkConnectionException;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.model.DestinationPoint;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.events.DestinationPointsEvents;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.Preconditions;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.language.LanguageProvider;
 import org.jetbrains.annotations.NotNull;
 import timber.log.Timber;
