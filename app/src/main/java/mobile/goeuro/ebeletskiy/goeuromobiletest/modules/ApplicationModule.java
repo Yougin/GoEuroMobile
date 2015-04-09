@@ -1,5 +1,6 @@
 package mobile.goeuro.ebeletskiy.goeuromobiletest.modules;
 
+import android.content.res.Resources;
 import com.path.android.jobqueue.JobManager;
 import dagger.Module;
 import dagger.Provides;
@@ -34,5 +35,9 @@ public class ApplicationModule {
 
   @Provides @Singleton JobManager provideJobManager(App context) {
     return JobManagerFactory.getConfiguredJobManager(context);
+  }
+
+  @Provides @Singleton Resources provideResources(App context) {
+    return context.getResources();
   }
 }
