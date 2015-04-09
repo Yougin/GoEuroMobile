@@ -37,7 +37,8 @@ public class GetDestinationPointsJob extends BaseJob {
   }
 
   @Override public void onRun() throws Throwable {
-    List<DestinationPoint> destinationPoints = getDestinationPoints();
+    successEvent.setDestinationPoints(getDestinationPoints());
+    bus.postSticky(successEvent);
   }
 
   @SuppressWarnings("ConstantConditions") @NotNull

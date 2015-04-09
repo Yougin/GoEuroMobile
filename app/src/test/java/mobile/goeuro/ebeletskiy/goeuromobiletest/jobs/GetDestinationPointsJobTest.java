@@ -4,8 +4,11 @@ import dagger.Module;
 import dagger.ObjectGraph;
 import dagger.Provides;
 import de.greenrobot.event.EventBus;
+import java.util.ArrayList;
+import java.util.List;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.WebService;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.error.NetworkConnectionException;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.model.DestinationPoint;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.events.DestinationPointsEvents;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.language.LanguageProvider;
 import org.junit.Before;
@@ -15,6 +18,7 @@ import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPoint
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.failEvent;
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.languageProvider;
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.startedEvent;
+import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.successEvent;
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.webService;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -123,6 +127,25 @@ public class GetDestinationPointsJobTest {
         new NetworkConnectionException());
 
     job.onRun();
+  }
+
+  @Test
+  public void should_set_points_to_success_event_and_fire_it_when_data_fetched()
+      throws Exception, NetworkConnectionException {
+    List<DestinationPoint> destinationPoints = createDestinationPoints();
+    when(webService.getDestinationPoints(anyString(), anyString())).thenReturn(destinationPoints);
+
+    jobOnRun();
+
+    verify(successEvent).setDestinationPoints(destinationPoints);
+    verify(bus).postSticky(successEvent);
+  }
+
+  private List<DestinationPoint> createDestinationPoints() {
+    ArrayList<DestinationPoint> destinationPoints = new ArrayList<>();
+    destinationPoints.add(new DestinationPoint());
+    destinationPoints.add(new DestinationPoint());
+    return destinationPoints;
   }
 
   private void jobOnRun() {
