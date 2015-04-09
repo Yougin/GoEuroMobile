@@ -7,8 +7,7 @@ import mobile.goeuro.ebeletskiy.goeuromobiletest.events.DestinationPointsEvents;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJob;
 
 @Module(injects = GetDestinationPointsJob.class,
-    complete = false,
-    library = true) // TODO: Remove once all dependencies are in use
+    complete = false)
 public class JobsModule {
 
   @Provides @Singleton DestinationPointsEvents.StartedEvent provideStartedEvent() {

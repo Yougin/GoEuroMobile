@@ -4,13 +4,18 @@ import com.path.android.jobqueue.Params;
 import de.greenrobot.event.EventBus;
 import javax.inject.Inject;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.WebService;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.events.DestinationPointsEvents;
 
 public class GetDestinationPointsJob extends BaseJob {
 
-  @Inject public EventBus bus;
-  @Inject public WebService webService;
+  @Inject EventBus bus;
+  @Inject WebService webService;
 
-  protected GetDestinationPointsJob() {
+  @Inject DestinationPointsEvents.StartedEvent startedEvent;
+  @Inject DestinationPointsEvents.SuccessEvent successEvent;
+  @Inject DestinationPointsEvents.FailEvent failEvent;
+
+  public GetDestinationPointsJob() {
     super(new Params(Priority.NORMAL).requireNetwork().persist());
   }
 
