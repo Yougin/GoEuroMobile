@@ -9,5 +9,9 @@ public interface TravelView {
 
   void hideProgressBar();
 
-  void setErrorMessage(String string);
+  void setErrorMessage(String message);
+
+  void showErrorMessage();
+
+  void hideErrorMessage();
 }

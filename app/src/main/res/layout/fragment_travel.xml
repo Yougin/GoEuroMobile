@@ -1,7 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#aa00aa">
+    android:layout_height="match_parent">
+
+  <AutoCompleteTextView
+      android:id="@+id/travel_from_autocomplete"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"/>
+
+  <AutoCompleteTextView
+      android:id="@+id/travel_to_autocomplete"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/travel_from_autocomplete"
+      android:visibility="gone"/>
+
+  <Button
+      android:id="@+id/travel_search_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/travel_to_autocomplete"
+      android:visibility="gone"/>
+
+  <ProgressBar
+      android:id="@+id/travel_progress_bar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_centerInParent="true"
+      style="@android:style/Widget.ProgressBar.Large.Inverse"/>
+
+  <TextView
+      android:id="@+id/travel_error_message"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:visibility="gone"
+      android:layout_centerInParent="true"/>
+
 
 </RelativeLayout>

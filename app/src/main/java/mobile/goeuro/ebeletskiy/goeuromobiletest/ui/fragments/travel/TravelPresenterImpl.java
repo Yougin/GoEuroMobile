@@ -58,6 +58,7 @@ public class TravelPresenterImpl implements TravelPresenter {
   @Override public void onEvent(LocationProviderEvents.LastKnownLocationFailEvent failEvent) {
     view.hideViews();
     view.hideProgressBar();
+    view.showErrorMessage();
     view.setErrorMessage(resources.getString(R.string.failed_to_get_your_location));
   }
 
@@ -66,8 +67,11 @@ public class TravelPresenterImpl implements TravelPresenter {
     Location lastKnownUserLocation = locationProvider.getLastKnownUserLocation();
 
     if (lastKnownUserLocation == null) {
+      view.showErrorMessage();
       view.setErrorMessage(resources.getString(R.string.failed_to_get_your_location));
       return;
+    } else {
+      view.hideErrorMessage();
     }
 
     Collections.sort(destinationPoints,
