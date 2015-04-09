@@ -14,7 +14,9 @@ public interface WebService {
    * @param city - you would like to get destination points for (from?)
    * @return If no matches are found an empty JSON array is returned.
    */
-  @GET("/GoEuroAPI/rest/api/v2/position/suggest/en/{city}")
-  List<DestinationPoint> getDestinationPoints(@Path("city") String city)
+  @GET("/GoEuroAPI/rest/api/v2/position/suggest/{language}/{city}")
+  List<DestinationPoint> getDestinationPoints(
+      @Path("language") String language,
+      @Path("city") String city)
       throws NetworkConnectionException;
 }
