@@ -9,7 +9,10 @@ import mobile.goeuro.ebeletskiy.goeuromobiletest.App;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.JobManagerFactory;
 
 @Module(injects = App.class,
-    includes = ApiModule.class,
+    includes = {
+        ApiModule.class,
+        JobsModule.class
+    },
     library = true) // TODO: remove library once all dependencies are in use
 public class ApplicationModule {
 
