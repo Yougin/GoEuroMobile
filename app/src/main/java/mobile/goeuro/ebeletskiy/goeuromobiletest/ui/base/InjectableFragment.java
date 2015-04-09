@@ -24,7 +24,4 @@ public abstract class InjectableFragment extends Fragment {
 
   public abstract Object getModules();
 
-  public ObjectGraph getScopedGraph() {
-    return scopedGraph;
-  }
 }

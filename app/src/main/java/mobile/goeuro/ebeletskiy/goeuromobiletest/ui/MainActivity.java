@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.R;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.ui.fragments.travel.TravelFragment;
+import timber.log.Timber;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -15,7 +16,7 @@ public class MainActivity extends ActionBarActivity {
     if (savedInstanceState == null) {
       getSupportFragmentManager()
           .beginTransaction()
-          .add(R.id.rootview, new TravelFragment())
+          .replace(R.id.rootview, new TravelFragment())
           .commit();
     }
   }
