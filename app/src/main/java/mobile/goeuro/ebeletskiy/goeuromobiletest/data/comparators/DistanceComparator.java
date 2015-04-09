@@ -1,7 +1,8 @@
-package mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.model;
+package mobile.goeuro.ebeletskiy.goeuromobiletest.data.comparators;
 
 import android.location.Location;
 import java.util.Comparator;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.model.DestinationPoint;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.helpers.Preconditions;
 import org.jetbrains.annotations.NotNull;
 

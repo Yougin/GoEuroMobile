@@ -4,6 +4,7 @@ import android.location.Location;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.data.comparators.DistanceComparator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

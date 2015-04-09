@@ -11,6 +11,7 @@ import mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.JobManagerFactory;
 @Module(injects = App.class,
     includes = {
         ApiModule.class,
+        DataModule.class,
         JobsModule.class,
         UtilsModule.class
     },
