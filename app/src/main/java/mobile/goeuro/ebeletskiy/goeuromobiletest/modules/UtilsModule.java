@@ -8,6 +8,7 @@ import mobile.goeuro.ebeletskiy.goeuromobiletest.App;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.language.ILocale;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.language.LanguageProvider;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.language.SystemLocaleWrapper;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.location.ILocationProvider;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.location.UserLocationProvider;
 
 @Module(library = true, complete = false)
@@ -25,7 +26,7 @@ public class UtilsModule {
     return new GoogleApiClient.Builder(app);
   }
 
-  @Provides @Singleton UserLocationProvider provideUserLocationProvider(
+  @Provides @Singleton ILocationProvider provideUserLocationProvider(
       GoogleApiClient.Builder client) {
     return new UserLocationProvider(client);
   }

@@ -7,8 +7,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import timber.log.Timber;
 
-public class UserLocationProvider
-    implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class UserLocationProvider implements
+    GoogleApiClient.ConnectionCallbacks,
+    GoogleApiClient.OnConnectionFailedListener, ILocationProvider {
 
   private final GoogleApiClient.Builder builder;
   private GoogleApiClient mApiClient;
@@ -21,23 +22,26 @@ public class UserLocationProvider
   public void connect() {
     Timber.d("Connecting to location services...");
 
-    if (mApiClient != null && (mApiClient.isConnected() || mApiClient.isConnecting())) {
+    if (isConnectedOrConnecting()) {
       Timber.e("Looks like we connected already");
       return;
     }
 
+    createClientIfRequired();
+    mApiClient.connect();
+  }
+
+  private void createClientIfRequired() {
     if (mApiClient == null) {
       mApiClient = builder.addConnectionCallbacks(this)
           .addOnConnectionFailedListener(this)
           .addApi(LocationServices.API)
           .build();
     }
-
-    mApiClient.connect();
   }
 
   public void disconnect() {
-    if (mApiClient != null && (mApiClient.isConnected() || mApiClient.isConnecting())) {
+    if (isConnectedOrConnecting()) {
       mApiClient.disconnect();
     }
   }
@@ -55,10 +59,14 @@ public class UserLocationProvider
   }
 
   @Override public void onConnectionSuspended(int i) {
-    Timber.d("onConnectionSuspended");
+    Timber.d("onConnectionSuspended - to be implemented next release");
   }
 
   @Override public void onConnectionFailed(ConnectionResult connectionResult) {
-    Timber.d("onConnectionFailed");
+    Timber.d("onConnectionFailed - to be implemented next release");
+  }
+
+  private boolean isConnectedOrConnecting() {
+    return mApiClient != null && (mApiClient.isConnected() || mApiClient.isConnecting());
   }
 }
