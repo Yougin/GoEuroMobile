@@ -9,11 +9,10 @@ import javax.inject.Inject;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.R;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.modules.screens.TravelModule;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.ui.base.InjectableFragment;
-import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.location.ILocationProvider;
 
 public class TravelFragment extends InjectableFragment implements TravelView {
 
-  @Inject ILocationProvider locationProvider;
+  @Inject TravelPresenter presenter;
 
   @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
@@ -22,12 +21,32 @@ public class TravelFragment extends InjectableFragment implements TravelView {
 
   @Override public void onResume() {
     super.onResume();
-    locationProvider.connect();
+    presenter.onResume();
   }
 
   @Override public void onPause() {
     super.onPause();
-    locationProvider.disconnect();
+    presenter.onPause();
+  }
+
+  @Override public void showViews() {
+
+  }
+
+  @Override public void hideViews() {
+
+  }
+
+  @Override public void showProgressBar() {
+
+  }
+
+  @Override public void hideProgressBar() {
+
+  }
+
+  @Override public void setErrorMessage(String string) {
+
   }
 
   @Override public Object getModules() {
