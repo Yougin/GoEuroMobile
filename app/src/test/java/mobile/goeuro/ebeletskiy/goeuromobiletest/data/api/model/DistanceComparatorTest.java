@@ -34,27 +34,33 @@ public class DistanceComparatorTest {
   }
 
   @Test public void should_sort_locations_close_to_user_location() throws Exception {
-    List<Location> locations = getListOfSubwayStations();
-    assertThat(locations.get(0).getProvider(), equalTo(BISMARKSTR));
-    assertThat(locations.get(1).getProvider(), equalTo(KAISERDAMM));
+    List<DestinationPoint> destinationPoints = getDestinationPoints();
+    assertThat(destinationPoints.get(0).getName(), equalTo(BISMARKSTR));
+    assertThat(destinationPoints.get(1).getName(), equalTo(KAISERDAMM));
 
-    Collections.sort(locations, distanceComparator);
+    Collections.sort(destinationPoints, distanceComparator);
 
-    assertThat(locations.get(0).getProvider(), equalTo(KAISERDAMM));
-    assertThat(locations.get(1).getProvider(), equalTo(BISMARKSTR));
+    assertThat(destinationPoints.get(0).getName(), equalTo(KAISERDAMM));
+    assertThat(destinationPoints.get(1).getName(), equalTo(BISMARKSTR));
   }
 
-  private List<Location> getListOfSubwayStations() {
+  private List<DestinationPoint> getDestinationPoints() {
 
-    ArrayList<Location> locations = new ArrayList<>();
+    ArrayList<DestinationPoint> locations = new ArrayList<>();
 
-    Location kaiserdammStation = new Location(KAISERDAMM);
-    kaiserdammStation.setLatitude(52.510138);
-    kaiserdammStation.setLongitude(13.282046);
+    DestinationPoint kaiserdammStation = new DestinationPoint();
+    DestinationPoint.GeoPosition geoPositionKaiserdamm = new DestinationPoint.GeoPosition();
+    geoPositionKaiserdamm.setLatitude(52.510138);
+    geoPositionKaiserdamm.setLongitude(13.282046);
+    kaiserdammStation.setGeoPosition(geoPositionKaiserdamm);
+    kaiserdammStation.setName(KAISERDAMM);
 
-    Location bismarkstrStation = new Location(BISMARKSTR);
-    bismarkstrStation.setLatitude(52.512645);
-    bismarkstrStation.setLongitude(13.305735);
+    DestinationPoint bismarkstrStation = new DestinationPoint();
+    DestinationPoint.GeoPosition geoPositionBismark = new DestinationPoint.GeoPosition();
+    geoPositionBismark.setLatitude(52.512645);
+    geoPositionBismark.setLongitude(13.305735);
+    bismarkstrStation.setGeoPosition(geoPositionBismark);
+    bismarkstrStation.setName(BISMARKSTR);
 
     locations.add(bismarkstrStation);
     locations.add(kaiserdammStation);
