@@ -8,10 +8,10 @@ import java.util.List;
 import javax.inject.Inject;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.R;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.model.DestinationPoint;
-import mobile.goeuro.ebeletskiy.goeuromobiletest.data.comparators.DistanceComparator;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.comparators.DistanceComparatorFactory;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.events.DestinationPointsEvents;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.events.LocationProviderEvents;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.ui.adapters.DestinationPointsAdapter;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.helpers.Preconditions;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.location.ILocationProvider;
 import org.jetbrains.annotations.NotNull;
@@ -24,16 +24,20 @@ public class TravelPresenterImpl implements TravelPresenter {
   private final ILocationProvider locationProvider;
   private final DistanceComparatorFactory distanceComparatorFactory;
   private final Resources resources;
+  private final DestinationPointsAdapter adapter;
+
+  private boolean isFromView;
 
   @Inject public TravelPresenterImpl(TravelView view, EventBus bus, TravelInteractor interactor,
       ILocationProvider locationProvider, Resources resources,
-      DistanceComparatorFactory distanceComparatorFactory) {
+      DistanceComparatorFactory distanceComparatorFactory, DestinationPointsAdapter adapter) {
     this.view = Preconditions.checkNotNull(view);
     this.bus = Preconditions.checkNotNull(bus);
     this.interactor = Preconditions.checkNotNull(interactor);
     this.locationProvider = Preconditions.checkNotNull(locationProvider);
     this.resources = Preconditions.checkNotNull(resources);
     this.distanceComparatorFactory = Preconditions.checkNotNull(distanceComparatorFactory);
+    this.adapter = Preconditions.checkNotNull(adapter);
   }
 
   @Override public void onResume() {
@@ -77,10 +81,27 @@ public class TravelPresenterImpl implements TravelPresenter {
     Collections.sort(destinationPoints,
         distanceComparatorFactory.getInstance(lastKnownUserLocation));
 
-    // TODO: set adapter on proper view
+    adapter.setData(destinationPoints);
+    setAdapter(adapter);
+  }
+
+  private void setAdapter(DestinationPointsAdapter adapter) {
+    if (isFromView) {
+      view.setAdapterForFromView(adapter);
+    } else {
+      view.setAdapterForToView(adapter);
+    }
   }
 
   @Override public void onEventMainThread(DestinationPointsEvents.FailEvent failEvent) {
     // TODO: show error message
+  }
+
+  @Override public void setWhichTextViewToUpdate(TravelAutocompleteView which) {
+    if (which == TravelAutocompleteView.FROM) {
+      isFromView = true;
+    } else if (which == TravelAutocompleteView.TO) {
+      isFromView = false;
+    }
   }
 }

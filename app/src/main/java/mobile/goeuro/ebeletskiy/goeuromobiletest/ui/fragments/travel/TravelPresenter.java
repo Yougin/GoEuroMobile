@@ -19,4 +19,6 @@ public interface TravelPresenter {
   void onEventMainThread(DestinationPointsEvents.SuccessEvent successEvent);
 
   void onEventMainThread(DestinationPointsEvents.FailEvent failEvent);
+
+  void setWhichTextViewToUpdate(TravelAutocompleteView which);
 }

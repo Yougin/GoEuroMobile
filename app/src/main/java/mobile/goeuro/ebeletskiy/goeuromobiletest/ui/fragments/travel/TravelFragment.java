@@ -2,9 +2,12 @@ package mobile.goeuro.ebeletskiy.goeuromobiletest.ui.fragments.travel;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -13,8 +16,10 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import javax.inject.Inject;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.R;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.model.DestinationPoint;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.modules.screens.TravelModule;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.ui.base.InjectableFragment;
+import org.jetbrains.annotations.NotNull;
 
 public class TravelFragment extends InjectableFragment implements TravelView {
 
@@ -31,6 +36,13 @@ public class TravelFragment extends InjectableFragment implements TravelView {
     View view = inflater.inflate(R.layout.fragment_travel, container, false);
     ButterKnife.inject(this, view);
     return view;
+  }
+
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+
+    fromTextView.addTextChangedListener(new FromTextWatcher());
+    toTextView.addTextChangedListener(new ToTextWatcher());
   }
 
   @Override public void onResume() {
@@ -53,7 +65,6 @@ public class TravelFragment extends InjectableFragment implements TravelView {
     fromTextView.setVisibility(View.INVISIBLE);
     toTextView.setVisibility(View.INVISIBLE);
     searchButton.setVisibility(View.INVISIBLE);
-
   }
 
   @Override public void showProgressBar() {
@@ -76,7 +87,46 @@ public class TravelFragment extends InjectableFragment implements TravelView {
     errorMessage.setVisibility(View.INVISIBLE);
   }
 
+  @Override public void setAdapterForToView(@NotNull ArrayAdapter<DestinationPoint> adapter) {
+    toTextView.setAdapter(adapter);
+  }
+
+  @Override public void setAdapterForFromView(@NotNull ArrayAdapter<DestinationPoint> adapter) {
+    fromTextView.setAdapter(adapter);
+  }
+
   @Override public Object getModules() {
     return new TravelModule(this);
   }
+
+  private class FromTextWatcher implements TextWatcher {
+    @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+      presenter.getDestinationPoints(s.toString());
+      presenter.setWhichTextViewToUpdate(TravelAutocompleteView.FROM);
+    }
+
+    @Override public void afterTextChanged(Editable s) {
+
+    }
+  }
+
+  private class ToTextWatcher implements TextWatcher {
+    @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+      presenter.getDestinationPoints(s.toString());
+      presenter.setWhichTextViewToUpdate(TravelAutocompleteView.TO);
+    }
+
+    @Override public void afterTextChanged(Editable s) {
+
+    }
+  }
+
 }
