@@ -19,7 +19,7 @@ public class DestinationPointsAdapter extends ArrayAdapter<DestinationPoint> {
   private LayoutInflater inflater;
   private ArrayList<DestinationPoint> destinationPoints;
   private ArrayList<DestinationPoint> suggestions;
-  private ArrayList<DestinationPoint> itemsAll;
+  private ArrayList<DestinationPoint> allDestinationPoints;
 
   @Inject public DestinationPointsAdapter(App context, LayoutInflater inflater) {
     super(context, 0);
@@ -29,7 +29,7 @@ public class DestinationPointsAdapter extends ArrayAdapter<DestinationPoint> {
 
   public void setData(@NotNull List<DestinationPoint> destinationPoints) {
     this.destinationPoints = (ArrayList<DestinationPoint>) destinationPoints;
-    itemsAll = (ArrayList<DestinationPoint>) this.destinationPoints.clone();
+    allDestinationPoints = (ArrayList<DestinationPoint>) this.destinationPoints.clone();
   }
 
   @Override public int getCount() {
@@ -70,7 +70,7 @@ public class DestinationPointsAdapter extends ArrayAdapter<DestinationPoint> {
     @Override protected FilterResults performFiltering(CharSequence constraint) {
       if (constraint != null) {
         suggestions.clear();
-        for (DestinationPoint point : itemsAll) {
+        for (DestinationPoint point : allDestinationPoints) {
           if (point.getFullName().toLowerCase().startsWith(constraint.toString().toLowerCase())) {
             suggestions.add(point);
           }
