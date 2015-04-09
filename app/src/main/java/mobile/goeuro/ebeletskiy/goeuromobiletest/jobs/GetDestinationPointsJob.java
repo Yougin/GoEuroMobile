@@ -20,7 +20,7 @@ public class GetDestinationPointsJob extends BaseJob {
   }
 
   @Override public void onAdded() {
-
+    bus.post(startedEvent);
   }
 
   @Override public void onRun() throws Throwable {
