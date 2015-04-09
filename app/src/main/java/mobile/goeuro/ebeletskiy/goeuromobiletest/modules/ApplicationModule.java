@@ -1,6 +1,7 @@
 package mobile.goeuro.ebeletskiy.goeuromobiletest.modules;
 
 import android.content.res.Resources;
+import android.view.LayoutInflater;
 import com.path.android.jobqueue.JobManager;
 import dagger.Module;
 import dagger.Provides;
@@ -39,5 +40,9 @@ public class ApplicationModule {
 
   @Provides @Singleton Resources provideResources(App context) {
     return context.getResources();
+  }
+
+  @Provides @Singleton LayoutInflater provideLayoutInflater(App app) {
+    return LayoutInflater.from(app);
   }
 }
