@@ -7,14 +7,16 @@
       android:id="@+id/travel_from_autocomplete"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:visibility="gone"/>
+      android:visibility="visible"
+      android:ems="10"/>
 
   <AutoCompleteTextView
       android:id="@+id/travel_to_autocomplete"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@+id/travel_from_autocomplete"
-      android:visibility="gone"/>
+      android:visibility="gone"
+      android:ems="10"/>
 
   <Button
       android:id="@+id/travel_search_button"
