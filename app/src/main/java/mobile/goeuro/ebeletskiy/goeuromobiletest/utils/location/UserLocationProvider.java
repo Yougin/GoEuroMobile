@@ -9,6 +9,7 @@ import de.greenrobot.event.EventBus;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.events.LocationProviderEvents;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.helpers.Preconditions;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import timber.log.Timber;
 
 public class UserLocationProvider
@@ -20,6 +21,7 @@ public class UserLocationProvider
   private final LocationProviderEvents.LastKnownLocationSuccessEvent successEvent;
 
   private GoogleApiClient mApiClient;
+  private Location lastKnownUserLocation;
 
   public UserLocationProvider(@NotNull GoogleApiClient.Builder builder, @NotNull EventBus bus,
       @NotNull LocationProviderEvents.LastKnownLocationSuccessEvent successEvent) {
@@ -60,6 +62,10 @@ public class UserLocationProvider
     }
   }
 
+  @Override @Nullable public Location getLastKnownUserLocation() {
+    return lastKnownUserLocation;
+  }
+
   /**
    * Dear reviewers, I'm omitting location updates deliberately, to be implemented in next round!
    */
@@ -71,6 +77,7 @@ public class UserLocationProvider
       Timber.d(
           "Location fetched " + lastLocation.getLatitude() + " " + lastLocation.getLongitude());
 
+      lastKnownUserLocation = lastLocation;
       successEvent.setLocation(lastLocation);
       bus.postSticky(successEvent);
     } else {
