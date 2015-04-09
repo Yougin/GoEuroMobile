@@ -9,6 +9,10 @@ import mobile.goeuro.ebeletskiy.goeuromobiletest.events.DestinationPointsEvents;
 import org.junit.Before;
 import org.junit.Test;
 
+import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.bus;
+import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.startedEvent;
+
+import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.webService;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -60,6 +64,17 @@ public class GetDestinationPointsJobTest {
   @Test public void should_fire_start_event_when_job_added() throws Exception {
     job.onAdded();
 
-    verify(TestModule.bus).post(TestModule.startedEvent);
+    verify(bus).post(startedEvent);
   }
+
+  //@Test public void should_invoke_getDestinationPoints_for_webservice_when_job_is_running()
+  //    throws Exception {
+  //  try {
+  //    job.onRun();
+  //  } catch (Throwable throwable) {
+  //    // catch silently
+  //  }
+  //
+  //  verify(webService).getDestinationPoints()
+  //}
 }
