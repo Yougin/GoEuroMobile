@@ -15,15 +15,14 @@ import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPoint
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.failEvent;
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.languageProvider;
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.startedEvent;
-
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.webService;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class GetDestinationPointsJobTest {
 
@@ -115,6 +114,15 @@ public class GetDestinationPointsJobTest {
     boolean isRepeatable = job.shouldReRunOnThrowable(new RuntimeException());
 
     assertThat(isRepeatable, is(true));
+  }
+
+  @Test(expected = RuntimeException.class)
+  public void should_runtime_exception_be_thrown_in_case_of_network_failure()
+      throws Throwable {
+    when(webService.getDestinationPoints(anyString(), anyString())).thenThrow(
+        new NetworkConnectionException());
+
+    job.onRun();
   }
 
   private void jobOnRun() {

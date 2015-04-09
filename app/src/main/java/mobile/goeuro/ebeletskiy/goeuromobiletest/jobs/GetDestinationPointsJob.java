@@ -6,10 +6,12 @@ import de.greenrobot.event.EventBus;
 import java.util.List;
 import javax.inject.Inject;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.WebService;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.error.NetworkConnectionException;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.model.DestinationPoint;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.events.DestinationPointsEvents;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.language.LanguageProvider;
 import org.jetbrains.annotations.NotNull;
+import timber.log.Timber;
 
 public class GetDestinationPointsJob extends BaseJob {
 
@@ -35,8 +37,20 @@ public class GetDestinationPointsJob extends BaseJob {
   }
 
   @Override public void onRun() throws Throwable {
-    List<DestinationPoint> destinationPoints =
-        webService.getDestinationPoints(languageProvider.getUserLanguage(), city);
+    List<DestinationPoint> destinationPoints = getDestinationPoints();
+  }
+
+  @SuppressWarnings("ConstantConditions") @NotNull
+  private List<DestinationPoint> getDestinationPoints() {
+    List<DestinationPoint> destinationPoints = null;
+    try {
+      destinationPoints = webService.getDestinationPoints(languageProvider.getUserLanguage(), city);
+    } catch (NetworkConnectionException e) {
+      Timber.e("Failed to fetch data because of Network Connection problem");
+      stopJob();
+    }
+
+    return destinationPoints;
   }
 
   @Override protected void onCancel() {
