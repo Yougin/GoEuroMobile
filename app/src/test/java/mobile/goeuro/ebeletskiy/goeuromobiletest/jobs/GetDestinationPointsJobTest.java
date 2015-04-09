@@ -6,6 +6,7 @@ import dagger.Provides;
 import de.greenrobot.event.EventBus;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.WebService;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.events.DestinationPointsEvents;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.language.LanguageProvider;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,11 +25,12 @@ public class GetDestinationPointsJobTest {
   public static class TestModule {
 
     public static EventBus bus;
-    static WebService webService;
+    public static WebService webService;
+    public static LanguageProvider languageProvider;
 
     public static DestinationPointsEvents.StartedEvent startedEvent;
-    static DestinationPointsEvents.SuccessEvent successEvent;
-    static DestinationPointsEvents.FailEvent failEvent;
+    public static DestinationPointsEvents.SuccessEvent successEvent;
+    public static DestinationPointsEvents.FailEvent failEvent;
 
     @Provides EventBus provideEventBus() {
       bus = mock(EventBus.class);
@@ -53,6 +55,11 @@ public class GetDestinationPointsJobTest {
     @Provides DestinationPointsEvents.FailEvent provideFailEvent() {
       failEvent = mock(DestinationPointsEvents.FailEvent.class);
       return failEvent;
+    }
+
+    @Provides LanguageProvider provideLanguageProvider() {
+      languageProvider = mock(LanguageProvider.class);
+      return languageProvider;
     }
   }
 

@@ -4,12 +4,12 @@ import javax.inject.Inject;
 
 public class LanguageProvider {
 
-  private SystemLocaleWrapper defaultLocale;
+  private ILocale defaultLocale;
 
   public static final String EN = "en";
   public static final String DE = "de";
 
-  @Inject public LanguageProvider(SystemLocaleWrapper defaultLocale) {
+  @Inject public LanguageProvider(ILocale defaultLocale) {
     this.defaultLocale = defaultLocale;
   }
 

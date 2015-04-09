@@ -5,11 +5,13 @@ import de.greenrobot.event.EventBus;
 import javax.inject.Inject;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.WebService;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.events.DestinationPointsEvents;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.utils.language.LanguageProvider;
 
 public class GetDestinationPointsJob extends BaseJob {
 
   @Inject EventBus bus;
   @Inject WebService webService;
+  @Inject LanguageProvider languageProvider;
 
   @Inject DestinationPointsEvents.StartedEvent startedEvent;
   @Inject DestinationPointsEvents.SuccessEvent successEvent;
