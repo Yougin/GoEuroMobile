@@ -5,7 +5,7 @@ GoEuroMobile is a test assignment application. The description can be found here
 Demo movie can be found here: https://www.youtube.com/watch?v=dEg6WfzOySA&feature=youtu.be
 
 A part of the application was created using `TDD` approach. In order to make this happen the MVP and DI architectural patters are used.
-Tests written with plain unit tests (`JUnit4`) and with `Robolectic` library where not mocked version of object instances from Android Framework is under consideration.
+Tests written with plain unit tests (`JUnit4`) and with `Robolectic` library where not mocked version of object instances from Android Framework is under consideration (like `DistanceComparatorTest.java`)
 
 The following 3rd party libraries were used:
 
