@@ -17,7 +17,6 @@ import org.junit.Test;
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.bus;
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.failEvent;
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.languageProvider;
-import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.startedEvent;
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.successEvent;
 import static mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJobTest.TestModule.webService;
 import static org.hamcrest.CoreMatchers.is;
@@ -41,7 +40,6 @@ public class GetDestinationPointsJobTest {
     public static WebService webService;
     public static LanguageProvider languageProvider;
 
-    public static DestinationPointsEvents.StartedEvent startedEvent;
     public static DestinationPointsEvents.SuccessEvent successEvent;
     public static DestinationPointsEvents.FailEvent failEvent;
 
@@ -53,11 +51,6 @@ public class GetDestinationPointsJobTest {
     @Provides WebService provideWebService() {
       webService = mock(WebService.class);
       return webService;
-    }
-
-    @Provides DestinationPointsEvents.StartedEvent provideStartEvent() {
-      startedEvent = mock(DestinationPointsEvents.StartedEvent.class);
-      return startedEvent;
     }
 
     @Provides DestinationPointsEvents.SuccessEvent provideSuccessEvent() {
