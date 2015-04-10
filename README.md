@@ -2,7 +2,10 @@
 
 GoEuroMobile is a test assignment application. The description can be found here https://github.com/goeuro/mobile-test
 
-A part of the application was created using `TDD` approach. Tests written with plain unit tests (`JUnit4`) and with `Robolectic` library where not mocked version of object instances from Android Framework is under consideration.
+Demo movie can be found here: https://www.youtube.com/watch?v=dEg6WfzOySA&feature=youtu.be
+
+A part of the application was created using `TDD` approach. In order to make this happen the MVP and DI architectural patters are used.
+Tests written with plain unit tests (`JUnit4`) and with `Robolectic` library where not mocked version of object instances from Android Framework is under consideration.
 
 The following 3rd party libraries were used:
 
