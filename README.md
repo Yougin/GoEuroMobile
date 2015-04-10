@@ -27,4 +27,4 @@ The following 3rd party libraries were used:
 # Quick start
 
 1. Builds the project `./gradlew clean assembleDebug`
-2. You can run tests from IntellijIDEA / Android Studio or `./gradlew clean test` 
+2. You can run tests from IntellijIDEA / Android Studio or `./gradlew clean testDebug`
