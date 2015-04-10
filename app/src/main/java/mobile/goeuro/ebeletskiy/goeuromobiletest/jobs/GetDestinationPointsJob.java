@@ -19,26 +19,25 @@ public class GetDestinationPointsJob extends BaseJob {
   @Inject WebService webService;
   @Inject LanguageProvider languageProvider;
 
-  @Inject DestinationPointsEvents.StartedEvent startedEvent;
   @Inject DestinationPointsEvents.SuccessEvent successEvent;
   @Inject DestinationPointsEvents.FailEvent failEvent;
 
   private String city;
 
   public GetDestinationPointsJob(@NotNull String city) {
-    super(new Params(Priority.NORMAL).requireNetwork().persist());
+    super(new Params(Priority.NORMAL));
 
     this.city =
         Preconditions.checkNotNull(city, "city can't be null, make sure you don't pass null here");
   }
 
   @Override public void onAdded() {
-    bus.post(startedEvent);
+    // do nothing
   }
 
   @Override public void onRun() throws Throwable {
     successEvent.setDestinationPoints(getDestinationPoints());
-    bus.postSticky(successEvent);
+    bus.post(successEvent);
   }
 
   @SuppressWarnings("ConstantConditions") @NotNull
@@ -55,7 +54,7 @@ public class GetDestinationPointsJob extends BaseJob {
   }
 
   @Override protected void onCancel() {
-    bus.postSticky(failEvent);
+    bus.post(failEvent);
   }
 
   @Override protected boolean shouldReRunOnThrowable(Throwable throwable) {

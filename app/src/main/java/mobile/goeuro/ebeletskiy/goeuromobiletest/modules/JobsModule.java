@@ -10,10 +10,6 @@ import mobile.goeuro.ebeletskiy.goeuromobiletest.jobs.GetDestinationPointsJob;
     complete = false)
 public class JobsModule {
 
-  @Provides @Singleton DestinationPointsEvents.StartedEvent provideDestionationPointStartedEvent() {
-    return new DestinationPointsEvents.StartedEvent();
-  }
-
   @Provides @Singleton DestinationPointsEvents.SuccessEvent provideDestionationPointSuccessEvent() {
     return new DestinationPointsEvents.SuccessEvent();
   }

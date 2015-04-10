@@ -81,12 +81,6 @@ public class GetDestinationPointsJobTest {
     ObjectGraph.create(new TestModule()).inject(job);
   }
 
-  @Test public void should_fire_start_event_when_job_added() throws Exception {
-    job.onAdded();
-
-    verify(bus).post(startedEvent);
-  }
-
   @Test public void should_invoke_getDestinationPoints_for_webservice_when_job_is_running()
       throws Exception, NetworkConnectionException {
     jobOnRun();
@@ -111,7 +105,7 @@ public class GetDestinationPointsJobTest {
   @Test public void should_fire_failure_event_if_job_canceled() throws Exception {
     job.onCancel();
 
-    verify(bus).postSticky(failEvent);
+    verify(bus).post(failEvent);
   }
 
   @Test public void should_the_job_be_repeated_in_case_of_failure() throws Exception {
@@ -138,7 +132,7 @@ public class GetDestinationPointsJobTest {
     jobOnRun();
 
     verify(successEvent).setDestinationPoints(destinationPoints);
-    verify(bus).postSticky(successEvent);
+    verify(bus).post(successEvent);
   }
 
   private List<DestinationPoint> createDestinationPoints() {

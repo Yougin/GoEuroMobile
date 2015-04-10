@@ -26,7 +26,9 @@ public class TravelPresenterImpl implements TravelPresenter {
   private final Resources resources;
   private final DestinationPointsAdapter adapter;
 
-  private boolean isFromView;
+  private boolean isEventForFromField;
+  private boolean isToFieldFilledOut;
+  private boolean isFromFieldFilledOut;
 
   @Inject public TravelPresenterImpl(TravelView view, EventBus bus, TravelInteractor interactor,
       ILocationProvider locationProvider, Resources resources,
@@ -62,8 +64,7 @@ public class TravelPresenterImpl implements TravelPresenter {
   @Override public void onEvent(LocationProviderEvents.LastKnownLocationFailEvent failEvent) {
     view.hideViews();
     view.hideProgressBar();
-    view.showErrorMessage();
-    view.setErrorMessage(resources.getString(R.string.failed_to_get_your_location));
+    view.showErrorMessage(resources.getString(R.string.failed_to_get_your_location));
   }
 
   @Override public void onEventMainThread(DestinationPointsEvents.SuccessEvent successEvent) {
@@ -71,11 +72,8 @@ public class TravelPresenterImpl implements TravelPresenter {
     Location lastKnownUserLocation = locationProvider.getLastKnownUserLocation();
 
     if (lastKnownUserLocation == null) {
-      view.showErrorMessage();
-      view.setErrorMessage(resources.getString(R.string.failed_to_get_your_location));
+      view.showErrorMessage(resources.getString(R.string.failed_to_get_your_location));
       return;
-    } else {
-      view.hideErrorMessage();
     }
 
     Collections.sort(destinationPoints,
@@ -86,7 +84,7 @@ public class TravelPresenterImpl implements TravelPresenter {
   }
 
   private void setAdapter(DestinationPointsAdapter adapter) {
-    if (isFromView) {
+    if (isEventForFromField) {
       view.setAdapterForFromView(adapter);
     } else {
       view.setAdapterForToView(adapter);
@@ -94,14 +92,40 @@ public class TravelPresenterImpl implements TravelPresenter {
   }
 
   @Override public void onEventMainThread(DestinationPointsEvents.FailEvent failEvent) {
-    // TODO: show error message
+    // TODO: next coding round
   }
 
   @Override public void setWhichTextViewToUpdate(TravelAutocompleteView which) {
     if (which == TravelAutocompleteView.FROM) {
-      isFromView = true;
+      isEventForFromField = true;
     } else if (which == TravelAutocompleteView.TO) {
-      isFromView = false;
+      isEventForFromField = false;
     }
+  }
+
+  @Override public void setToFieldFilledOut(boolean isFilled) {
+    isToFieldFilledOut = isFilled;
+    checkIfSearchButtonChangeState();
+  }
+
+  @Override public void setSearchButtonSecondFlag(boolean isFilled) {
+    isFromFieldFilledOut = isFilled;
+    checkIfSearchButtonChangeState();
+  }
+
+  private void checkIfSearchButtonChangeState() {
+    view.enableSearchButton(isFromFieldFilledOut && isToFieldFilledOut);
+  }
+
+  @Override public void searchButtonClicked() {
+    view.showErrorMessage(resources.getString(R.string.search_not_yet_implemented));
+  }
+
+  @Override public void calendarButtonClicked() {
+    view.showCalendarView();
+  }
+
+  @Override public void onDateSelected(String date) {
+    view.setDate(date);
   }
 }

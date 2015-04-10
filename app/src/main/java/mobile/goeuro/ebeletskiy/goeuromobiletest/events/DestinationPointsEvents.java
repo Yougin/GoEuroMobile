@@ -7,10 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class DestinationPointsEvents {
 
-  public static class StartedEvent {
-
-  }
-
   public static class SuccessEvent {
 
     private List<DestinationPoint> destinationPoints;

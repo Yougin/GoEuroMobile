@@ -7,13 +7,17 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
+import com.fourmob.datetimepicker.date.DatePickerDialog;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import javax.inject.Inject;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.R;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.data.api.model.DestinationPoint;
@@ -29,7 +33,7 @@ public class TravelFragment extends InjectableFragment implements TravelView {
   @InjectView(R.id.travel_to_autocomplete) AutoCompleteTextView toTextView;
   @InjectView(R.id.travel_search_button) Button searchButton;
   @InjectView(R.id.travel_progress_bar) ProgressBar progressBar;
-  @InjectView(R.id.travel_error_message) TextView errorMessage;
+  @InjectView(R.id.travel_calendar_button) Button calendarButton;
 
   @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
@@ -41,8 +45,12 @@ public class TravelFragment extends InjectableFragment implements TravelView {
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
+    // TODO: Refactor: make all observables as static classes and provide weak reference to this object
     fromTextView.addTextChangedListener(new FromTextWatcher());
     toTextView.addTextChangedListener(new ToTextWatcher());
+
+    fromTextView.setOnItemClickListener(new FromOnItemClickListener());
+    toTextView.setOnItemClickListener(new ToOnItemClickListener());
   }
 
   @Override public void onResume() {
@@ -59,32 +67,22 @@ public class TravelFragment extends InjectableFragment implements TravelView {
     fromTextView.setVisibility(View.VISIBLE);
     toTextView.setVisibility(View.VISIBLE);
     searchButton.setVisibility(View.VISIBLE);
+    calendarButton.setVisibility(View.VISIBLE);
   }
 
   @Override public void hideViews() {
     fromTextView.setVisibility(View.INVISIBLE);
     toTextView.setVisibility(View.INVISIBLE);
     searchButton.setVisibility(View.INVISIBLE);
-  }
-
-  @Override public void showProgressBar() {
-    progressBar.setVisibility(View.VISIBLE);
+    calendarButton.setVisibility(View.INVISIBLE);
   }
 
   @Override public void hideProgressBar() {
     progressBar.setVisibility(View.INVISIBLE);
   }
 
-  @Override public void setErrorMessage(String message) {
-    errorMessage.setText(message);
-  }
-
-  @Override public void showErrorMessage() {
-    errorMessage.setVisibility(View.VISIBLE);
-  }
-
-  @Override public void hideErrorMessage() {
-    errorMessage.setVisibility(View.INVISIBLE);
+  @Override public void showErrorMessage(String errorMessage) {
+    Crouton.makeText(getActivity(), errorMessage, Style.ALERT).show();
   }
 
   @Override public void setAdapterForToView(@NotNull ArrayAdapter<DestinationPoint> adapter) {
@@ -95,8 +93,50 @@ public class TravelFragment extends InjectableFragment implements TravelView {
     fromTextView.setAdapter(adapter);
   }
 
+  @Override public void enableSearchButton(boolean isEnable) {
+    searchButton.setEnabled(isEnable);
+  }
+
+  // TODO: Set current date - implement in next coding round
+  @Override public void showCalendarView() {
+    final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
+        new MyOnDateSetListener(), 2015, 3, 10);
+    datePickerDialog.show(getFragmentManager(), "calendar");
+  }
+
+  @Override public void setDate(String date) {
+    calendarButton.setText(date);
+  }
+
   @Override public Object getModules() {
     return new TravelModule(this);
+  }
+
+  @OnClick(R.id.travel_search_button) public void onSearchButtonClick() {
+    presenter.searchButtonClicked();
+  }
+
+  @OnClick(R.id.travel_calendar_button) public void onCalendarButtonClick() {
+    presenter.calendarButtonClicked();
+  }
+
+  private class MyOnDateSetListener implements DatePickerDialog.OnDateSetListener {
+    @Override public void onDateSet(DatePickerDialog datePickerDialog, int i, int i2, int i3) {
+      presenter.onDateSelected(String.valueOf(i + "." + i2  + "." + i3));
+    }
+  }
+
+  private class FromOnItemClickListener implements AdapterView.OnItemClickListener {
+    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+      presenter.setToFieldFilledOut(true);
+
+    }
+  }
+
+  private class ToOnItemClickListener implements AdapterView.OnItemClickListener {
+    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+      presenter.setSearchButtonSecondFlag(true);
+    }
   }
 
   private class FromTextWatcher implements TextWatcher {
@@ -107,6 +147,7 @@ public class TravelFragment extends InjectableFragment implements TravelView {
     @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
       presenter.getDestinationPoints(s.toString());
       presenter.setWhichTextViewToUpdate(TravelAutocompleteView.FROM);
+      presenter.setToFieldFilledOut(false);
     }
 
     @Override public void afterTextChanged(Editable s) {
@@ -122,11 +163,11 @@ public class TravelFragment extends InjectableFragment implements TravelView {
     @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
       presenter.getDestinationPoints(s.toString());
       presenter.setWhichTextViewToUpdate(TravelAutocompleteView.TO);
+      presenter.setSearchButtonSecondFlag(false);
     }
 
     @Override public void afterTextChanged(Editable s) {
 
     }
   }
-
 }

@@ -9,17 +9,17 @@ public interface TravelView {
 
   void hideViews();
 
-  void showProgressBar();
-
   void hideProgressBar();
 
-  void setErrorMessage(String message);
-
-  void showErrorMessage();
-
-  void hideErrorMessage();
+  void showErrorMessage(String errorMessage);
 
   void setAdapterForToView(@NotNull ArrayAdapter<DestinationPoint> adapter);
 
   void setAdapterForFromView(@NotNull ArrayAdapter<DestinationPoint> adapter);
+
+  void enableSearchButton(boolean isEnable);
+
+  void showCalendarView();
+
+  void setDate(String date);
 }
