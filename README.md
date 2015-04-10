@@ -7,6 +7,8 @@ Demo movie can be found here: https://www.youtube.com/watch?v=dEg6WfzOySA&featur
 A part of the application was created using `TDD` approach. In order to make this happen the MVP and DI architectural patters are used.
 Tests written with plain unit tests (`JUnit4`) and with `Robolectic` library where not mocked version of object instances from Android Framework is under consideration (like `DistanceComparatorTest.java`)
 
+Scheduled location updates and Google Play Services availability wasn't implemented deliberately.
+
 The following 3rd party libraries were used:
 
 * `Dagger` as Dependency Injection library
