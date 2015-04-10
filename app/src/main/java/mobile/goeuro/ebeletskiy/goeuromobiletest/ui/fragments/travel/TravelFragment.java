@@ -99,8 +99,8 @@ public class TravelFragment extends InjectableFragment implements TravelView {
 
   // TODO: Set current date - implement in next coding round
   @Override public void showCalendarView() {
-    final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
-        new MyOnDateSetListener(), 2015, 3, 10);
+    final DatePickerDialog datePickerDialog =
+        DatePickerDialog.newInstance(new MyOnDateSetListener(), 2015, 3, 10);
     datePickerDialog.show(getFragmentManager(), "calendar");
   }
 
@@ -121,21 +121,21 @@ public class TravelFragment extends InjectableFragment implements TravelView {
   }
 
   private class MyOnDateSetListener implements DatePickerDialog.OnDateSetListener {
-    @Override public void onDateSet(DatePickerDialog datePickerDialog, int i, int i2, int i3) {
-      presenter.onDateSelected(String.valueOf(i + "." + i2  + "." + i3));
+    @Override public void onDateSet(DatePickerDialog datePickerDialog, int year, int month,
+        int day) {
+      presenter.onDateSelected(String.valueOf(year + "." + month + "." + day));
     }
   }
 
   private class FromOnItemClickListener implements AdapterView.OnItemClickListener {
     @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
       presenter.setToFieldFilledOut(true);
-
     }
   }
 
   private class ToOnItemClickListener implements AdapterView.OnItemClickListener {
     @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-      presenter.setSearchButtonSecondFlag(true);
+      presenter.setFromFieldFilledOut(true);
     }
   }
 
@@ -163,7 +163,7 @@ public class TravelFragment extends InjectableFragment implements TravelView {
     @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
       presenter.getDestinationPoints(s.toString());
       presenter.setWhichTextViewToUpdate(TravelAutocompleteView.TO);
-      presenter.setSearchButtonSecondFlag(false);
+      presenter.setFromFieldFilledOut(false);
     }
 
     @Override public void afterTextChanged(Editable s) {

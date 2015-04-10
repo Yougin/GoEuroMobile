@@ -29,6 +29,7 @@ public class TravelPresenterImpl implements TravelPresenter {
   private boolean isEventForFromField;
   private boolean isToFieldFilledOut;
   private boolean isFromFieldFilledOut;
+  private boolean isCalendarFilledOut;
 
   @Inject public TravelPresenterImpl(TravelView view, EventBus bus, TravelInteractor interactor,
       ILocationProvider locationProvider, Resources resources,
@@ -108,13 +109,18 @@ public class TravelPresenterImpl implements TravelPresenter {
     checkIfSearchButtonChangeState();
   }
 
-  @Override public void setSearchButtonSecondFlag(boolean isFilled) {
+  @Override public void setFromFieldFilledOut(boolean isFilled) {
     isFromFieldFilledOut = isFilled;
     checkIfSearchButtonChangeState();
   }
 
+  private void setCalendarFilledOut(boolean isFilled) {
+    isCalendarFilledOut = isFilled;
+    checkIfSearchButtonChangeState();
+  }
+
   private void checkIfSearchButtonChangeState() {
-    view.enableSearchButton(isFromFieldFilledOut && isToFieldFilledOut);
+    view.enableSearchButton(isFromFieldFilledOut && isToFieldFilledOut && isCalendarFilledOut);
   }
 
   @Override public void searchButtonClicked() {
@@ -123,6 +129,7 @@ public class TravelPresenterImpl implements TravelPresenter {
 
   @Override public void calendarButtonClicked() {
     view.showCalendarView();
+    setCalendarFilledOut(true);
   }
 
   @Override public void onDateSelected(String date) {
