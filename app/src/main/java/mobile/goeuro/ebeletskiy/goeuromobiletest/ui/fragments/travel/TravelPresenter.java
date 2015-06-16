@@ -16,10 +16,6 @@ public interface TravelPresenter {
 
   void onEvent(LocationProviderEvents.LastKnownLocationFailEvent failEvent);
 
-  void onEventMainThread(DestinationPointsEvents.SuccessEvent successEvent);
-
-  void onEventMainThread(DestinationPointsEvents.FailEvent failEvent);
-
   void setWhichTextViewToUpdate(TravelAutocompleteView which);
 
   void setFromFieldFilledOut(boolean isFilled);

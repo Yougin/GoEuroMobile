@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'me.tatarka.retrolambda'
 
 android {
   compileSdkVersion 22
@@ -18,7 +18,12 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
-  }
+
+//  compileOptions {
+//    sourceCompatibility JavaVersion.VERSION_1_8
+//    targetCompatibility JavaVersion.VERSION_1_8
+//  }
+}
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -46,7 +51,7 @@ dependencies {
     exclude group: 'com.google.android', module: 'support-v4'
   }
 
-  testCompile ('junit:junit:4.12') { exclude group: 'org.hamcrest' }
+  testCompile('junit:junit:4.12') { exclude group: 'org.hamcrest' }
   testCompile 'org.hamcrest:hamcrest-core:1.1'
   testCompile 'org.hamcrest:hamcrest-library:1.1'
   testCompile 'org.hamcrest:hamcrest-integration:1.1'
@@ -69,5 +74,4 @@ dependencies {
     exclude module: 'wagon-http-lightweight'
     exclude module: 'wagon-provider-api'
   }
-
 }

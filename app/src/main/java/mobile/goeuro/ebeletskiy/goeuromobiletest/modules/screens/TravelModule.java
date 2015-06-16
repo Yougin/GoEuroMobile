@@ -5,8 +5,7 @@ import dagger.Provides;
 import javax.inject.Singleton;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.modules.ApplicationModule;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.ui.fragments.travel.TravelFragment;
-import mobile.goeuro.ebeletskiy.goeuromobiletest.ui.fragments.travel.TravelInteractor;
-import mobile.goeuro.ebeletskiy.goeuromobiletest.ui.fragments.travel.TravelInteractorImpl;
+import mobile.goeuro.ebeletskiy.goeuromobiletest.domain.interactor.GetDestinationPointsUseCase;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.ui.fragments.travel.TravelPresenter;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.ui.fragments.travel.TravelPresenterImpl;
 import mobile.goeuro.ebeletskiy.goeuromobiletest.ui.fragments.travel.TravelView;
@@ -27,9 +26,5 @@ public class TravelModule {
 
   @Provides @Singleton TravelPresenter provideTravelPresenter(TravelPresenterImpl presenter) {
     return presenter;
-  }
-
-  @Provides @Singleton TravelInteractor provideTravelInteractor(TravelInteractorImpl interactor) {
-    return interactor;
   }
 }
