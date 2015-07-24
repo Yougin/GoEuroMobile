@@ -18,7 +18,7 @@ public class App extends Application {
     objectGraph = ObjectGraph.create(getModules().toArray());
     objectGraph.inject(this);
 
-    setupTimberPlant();
+    //setupTimberPlant();
   }
 
   public ObjectGraph createScopedGraph(Object... modules) {
